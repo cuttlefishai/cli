@@ -1,0 +1,197 @@
+# cuttlefish
+
+[![Go](https://img.shields.io/badge/go-1.25-00ADD8?logo=go)](https://go.dev)
+[![License](https://img.shields.io/badge/license-MIT-7C3AED)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-linux%20%7C%20macos-6B7280)](#install)
+
+CLI for installing, managing, and monitoring [Computron](https://github.com/lefoulkrod/computron_9000) — a containerized AI assistant. Wraps Docker or Podman with a Bubble Tea TUI and guided install wizard.
+
+---
+
+![screenshot](computron-cli.png)
+<!-- Replace with an actual recording once available. Suggested tool: vhs (https://github.com/charmbracelet/vhs) -->
+
+---
+
+## Features
+
+- **Guided install wizard** — preflight checks, config form, confirm panel, spinner-driven install steps
+- **Smart memory defaults** — suggests container RAM limits based on your system (20% of host RAM, 1–8 GB)
+- **Update in place** — pulls the latest image and recreates the container, preserving config
+- **Multi-instance** — run more than one container on different ports from a single binary
+- **Health check** — `doctor` runs parallel checks and prints a full pass/warn/fail report
+- **Docker + Podman** — auto-detected; SELinux, volume ownership, and Ollama host differences handled per OS
+- **Backup on uninstall** — optionally archives data directories to a `.tar.gz` before removal
+- **`--no-color`** — safe to pipe; exits non-zero on actual failures, not on warnings
+
+---
+
+## Requirements
+
+| Engine | Minimum version | Notes |
+|--------|----------------|-------|
+| Docker | 20.10+ | Required for `host-gateway` host alias (Ollama connectivity) |
+| Podman | 4.0+ | Required for `host.containers.internal` and `:U` volume remapping |
+
+Ollama is optional at install time — the wizard warns if it isn't reachable but proceeds anyway.
+
+---
+
+## Install
+
+### Homebrew (macOS / Linux)
+
+```sh
+# tap not yet published — build from source in the meantime
+```
+
+### Build from source
+
+Requires Go 1.21+ and Docker or Podman.
+
+```sh
+git clone https://github.com/cuttlefish/cli
+cd cli
+go build -ldflags="-s -w" -o cuttlefish .
+sudo mv cuttlefish /usr/local/bin/
+```
+
+### Verify
+
+```sh
+cuttlefish --version
+```
+
+---
+
+## Quickstart
+
+```sh
+# 1. Install (interactive wizard)
+cuttlefish install
+
+# 2. Check everything is healthy
+cuttlefish doctor
+
+# 3. Open the web UI
+#    http://localhost:8080
+```
+
+The wizard detects your container engine, checks Ollama reachability, suggests memory limits sized for your machine, and starts the container.
+
+---
+
+## Usage
+
+```
+cuttlefish <command> [flags]
+```
+
+### Commands
+
+| Command | Description |
+|---|---|
+| `install` | Interactive TUI wizard — install or update an existing instance |
+| `update` | Pull the latest image and recreate the container |
+| `start` | Start a stopped container |
+| `stop` | Gracefully stop the running container |
+| `restart` | Stop then start |
+| `status` | Print a status table (container, dirs, Ollama, web UI port) |
+| `logs` | Tail container logs |
+| `doctor` | Run parallel health checks and print a report |
+| `config show` | Pretty-print the saved config |
+| `config set <key> <value>` | Update a single config key |
+| `config path` | Print the config file path |
+| `uninstall` | Stop, remove container, optionally delete data dirs |
+
+### Global flags
+
+```
+--config string   Config file path (default: ~/.config/cuttlefish-cli/config.yaml)
+--name string     Instance name (e.g. cuttlefish, cuttlefish2)
+--no-color        Disable color output
+--debug           Print raw engine commands and stderr
+--version         Print version and exit
+```
+
+### Install flags
+
+```
+--image string    Override the container image (for testing alternate builds)
+```
+
+### Examples
+
+```sh
+# Tail logs and follow
+cuttlefish logs --follow --tail 100
+
+# Manage a specific instance by name
+cuttlefish --name cuttlefish2 status
+cuttlefish --name cuttlefish2 stop
+
+# Test an alternate image without changing the default
+cuttlefish install --image ghcr.io/example/img:dev
+
+# Uninstall a specific instance
+cuttlefish --name cuttlefish2 uninstall
+```
+
+### Multiple instances
+
+If an instance is already installed, `cuttlefish install` asks whether to update the existing instance or install a new one. New instances get a unique container name (`cuttlefish2`, `cuttlefish3`, …), separate data directories, and an incremented port.
+
+Commands that need an instance (e.g. `start`, `status`) show a picker when more than one instance exists, or accept `--name` to skip the prompt.
+
+---
+
+## Configuration
+
+Config files live at:
+
+```
+~/.config/cuttlefish-cli/instances/<container-name>.yaml
+```
+
+```yaml
+container_name: cuttlefish
+shared_dir: /home/user/Cuttlefish
+state_dir: /home/user/Cuttlefish/.state
+memory: 3g
+shm_size: 1536m
+web_ui_port: "8080"
+engine: docker
+image: ghcr.io/lefoulkrod/computron_9000:container-distro-latest
+installed_at: 2025-01-15T10:30:00Z
+```
+
+**`shared_dir`** is mounted into the container and visible to you as `~/Cuttlefish`.  
+**`state_dir`** is a hidden subdirectory (`Cuttlefish/.state`) used for persistent container state — you won't normally interact with it.  
+**`memory`** and **`shm_size`** are set by the wizard based on your system RAM and can be adjusted here or during install.
+
+---
+
+## Contributing
+
+1. Fork and clone the repo
+2. `go test ./...` — all tests must pass
+3. `go vet ./...` — no vet errors
+4. Open a PR against `main`
+
+**Engine calls shell out intentionally** — no Docker SDK. Keep the binary dependency-free when adding engine features.
+
+**Platform rules:** never add a Linux-only flag without a `runtime.GOOS` guard. Key differences between Linux and macOS:
+
+| Concern | Linux | macOS |
+|---------|-------|-------|
+| Volume SELinux flag | `:Z` (Docker), `:Z,U` (Podman) | Omit |
+| Volume ownership | `--user UID:GID` (Docker), `:U` (Podman) | Omit |
+| Ollama host | `host-gateway` (Docker), `host.containers.internal` (Podman) | `host.docker.internal` |
+
+See `CLAUDE.md` for the full platform table and architecture notes.
+
+---
+
+## License
+
+MIT © [cuttlefish](https://github.com/cuttlefish)
