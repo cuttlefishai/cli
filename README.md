@@ -50,7 +50,7 @@ Ollama is optional at install time — the wizard warns if it isn't reachable bu
 Requires Go 1.21+ and Docker or Podman.
 
 ```sh
-git clone https://github.com/cuttlefish/cli
+git clone https://github.com/cuttlefishai/cli
 cd cli
 go build -ldflags="-s -w" -o cuttlefish .
 sudo mv cuttlefish /usr/local/bin/

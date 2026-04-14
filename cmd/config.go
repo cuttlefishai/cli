@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/charmbracelet/lipgloss"
-	"github.com/cuttlefish/cli/config"
-	"github.com/cuttlefish/cli/styles"
+	"github.com/cuttlefishai/cli/config"
+	"github.com/cuttlefishai/cli/styles"
 	"github.com/spf13/cobra"
 )
 

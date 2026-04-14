@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/cuttlefish/cli/config"
+	"github.com/cuttlefishai/cli/config"
 )
 
 func makePickerItems() []config.InstanceInfo {

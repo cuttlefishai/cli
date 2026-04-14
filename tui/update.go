@@ -5,10 +5,10 @@ import (
 	"runtime"
 
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/cuttlefish/cli/checks"
-	"github.com/cuttlefish/cli/config"
-	"github.com/cuttlefish/cli/engine"
-	"github.com/cuttlefish/cli/styles"
+	"github.com/cuttlefishai/cli/checks"
+	"github.com/cuttlefishai/cli/config"
+	"github.com/cuttlefishai/cli/engine"
+	"github.com/cuttlefishai/cli/styles"
 )
 
 // UpdateModel is the Bubble Tea model for the update command.

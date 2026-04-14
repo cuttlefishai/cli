@@ -7,7 +7,7 @@ import (
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/cuttlefish/cli/styles"
+	"github.com/cuttlefishai/cli/styles"
 )
 
 // StepStatus represents the state of a single installation step.

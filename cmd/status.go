@@ -6,9 +6,9 @@ import (
 	"sync"
 
 	"github.com/charmbracelet/lipgloss"
-	"github.com/cuttlefish/cli/checks"
-	"github.com/cuttlefish/cli/engine"
-	"github.com/cuttlefish/cli/styles"
+	"github.com/cuttlefishai/cli/checks"
+	"github.com/cuttlefishai/cli/engine"
+	"github.com/cuttlefishai/cli/styles"
 	"github.com/spf13/cobra"
 )
 

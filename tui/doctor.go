@@ -8,10 +8,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/cuttlefish/cli/checks"
-	"github.com/cuttlefish/cli/config"
-	"github.com/cuttlefish/cli/engine"
-	"github.com/cuttlefish/cli/styles"
+	"github.com/cuttlefishai/cli/checks"
+	"github.com/cuttlefishai/cli/config"
+	"github.com/cuttlefishai/cli/engine"
+	"github.com/cuttlefishai/cli/styles"
 )
 
 // CheckStatus indicates pass/fail for a doctor check.

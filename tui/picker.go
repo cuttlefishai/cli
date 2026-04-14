@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/cuttlefish/cli/config"
-	"github.com/cuttlefish/cli/styles"
+	"github.com/cuttlefishai/cli/config"
+	"github.com/cuttlefishai/cli/styles"
 )
 
 // PickerModel is a minimal Bubble Tea program for choosing one of several instances.

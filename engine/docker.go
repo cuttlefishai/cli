@@ -9,7 +9,7 @@ import (
 	"os/user"
 	"strings"
 
-	"github.com/cuttlefish/cli/cmd/debug"
+	"github.com/cuttlefishai/cli/cmd/debug"
 )
 
 // DockerEngine implements Engine using the docker CLI.

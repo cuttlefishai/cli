@@ -1,6 +1,6 @@
 package main
 
-import "github.com/cuttlefish/cli/cmd"
+import "github.com/cuttlefishai/cli/cmd"
 
 // Version info injected at build time via ldflags.
 var (

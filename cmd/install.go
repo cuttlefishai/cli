@@ -7,9 +7,9 @@ import (
 	"strconv"
 
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/cuttlefish/cli/config"
-	"github.com/cuttlefish/cli/styles"
-	"github.com/cuttlefish/cli/tui"
+	"github.com/cuttlefishai/cli/config"
+	"github.com/cuttlefishai/cli/styles"
+	"github.com/cuttlefishai/cli/tui"
 	"github.com/spf13/cobra"
 )
 

@@ -5,11 +5,11 @@ import (
 	"os"
 	"strings"
 
-	"github.com/cuttlefish/cli/cmd/debug"
-	"github.com/cuttlefish/cli/config"
-	"github.com/cuttlefish/cli/engine"
-	"github.com/cuttlefish/cli/styles"
-	"github.com/cuttlefish/cli/tui"
+	"github.com/cuttlefishai/cli/cmd/debug"
+	"github.com/cuttlefishai/cli/config"
+	"github.com/cuttlefishai/cli/engine"
+	"github.com/cuttlefishai/cli/styles"
+	"github.com/cuttlefishai/cli/tui"
 	"github.com/spf13/cobra"
 )
 

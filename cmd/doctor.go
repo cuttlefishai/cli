@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/cuttlefish/cli/tui"
+	"github.com/cuttlefishai/cli/tui"
 	"github.com/spf13/cobra"
 )
 

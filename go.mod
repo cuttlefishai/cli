@@ -1,4 +1,4 @@
-module github.com/cuttlefish/cli
+module github.com/cuttlefishai/cli
 
 go 1.25.0
 
